@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caja a 14 días</title>
+<style>
+@font-face{font-family:Manrope;font-weight:400;src:url(assets/fuentes/Manrope_400Regular.ttf) format("truetype")}
+@font-face{font-family:Manrope;font-weight:500;src:url(assets/fuentes/Manrope_500Medium.ttf) format("truetype")}
+@font-face{font-family:Manrope;font-weight:600;src:url(assets/fuentes/Manrope_600SemiBold.ttf) format("truetype")}
+@font-face{font-family:Manrope;font-weight:700;src:url(assets/fuentes/Manrope_700Bold.ttf) format("truetype")}
+@font-face{font-family:Manrope;font-weight:800;src:url(assets/fuentes/Manrope_800ExtraBold.ttf) format("truetype")}
+:root{
+  /* Tokens de Necta: los mismos de app/src/theme/tokens.ts (design system público de necta-app.com) */
+  --surface:#F6F4F9; --white:#FFFFFF; --navy:#12163E; --navy-inner:#22264A; --navy-line:#2E3358; --hero-muted:#C9CBE0;
+  --ink:#1F1F21; --ink-muted:#666666; --ink-faint:#999999; --line:#E9E4F2;
+  --lavender:#EAEAF6; --lavender-deep:#D5DFF3; --indigo:#4147A4; --indigo-deep:#2B2F62; --periwinkle:#9BA1E0;
+  --orange:#F26938; --orange-deep:#E15D2F; --orange-soft:#FFE7D1; --orange-light:#FCAD75;
+  --green:#238E45; --green-bright:#49E68C; --green-soft:#D7F5E1; --red:#E23F24; --red-soft:#FDE3DE;
+  --amber:#B45309; --amber-soft:#FFF3C4;
+  --scale:1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0B0D24;font-family:Manrope,system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.stage{position:fixed;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--scale));overflow:hidden}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;background:var(--surface);padding:84px 120px 112px;display:none;flex-direction:column;overflow:hidden}
+.slide.on{display:flex}
+.slide.dark{background:var(--navy);color:var(--white)}
+.kicker{font-size:24px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);margin-bottom:18px}
+.dark .kicker{color:var(--periwinkle)}
+h1{font-size:64px;line-height:1.08;font-weight:800;letter-spacing:-.02em;max-width:1600px}
+h1 em,h2 em{font-style:normal;color:var(--orange)}
+.lead{font-size:30px;line-height:1.4;color:var(--ink-muted);margin-top:18px;max-width:1500px}
+.body{flex:1;display:flex;gap:48px;margin-top:44px;min-height:0}
+.foot{position:absolute;left:120px;right:120px;bottom:34px;display:flex;justify-content:space-between;font-size:20px;font-weight:600;color:var(--ink-faint)}
+.dark .foot{color:var(--hero-muted)}
+.card{background:var(--white);border:1.5px solid var(--line);border-radius:32px;padding:36px 40px;box-shadow:0 2px 0 rgba(18,22,62,.03)}
+.card.navy{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.card.lav{background:var(--lavender);border-color:var(--lavender)}
+.card h3{font-size:30px;font-weight:800;line-height:1.2}
+.card p{font-size:24px;line-height:1.45;color:var(--ink-muted)}
+.card.navy p{color:var(--hero-muted)}
+.chip{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:10px 22px;font-size:22px;font-weight:700;background:var(--lavender);color:var(--indigo-deep)}
+.chip.orange{background:var(--orange-soft);color:var(--orange-deep)}
+.chip.green{background:var(--green-soft);color:var(--green)}
+.chip.dark{background:var(--navy-inner);color:var(--white)}
+.chips{display:flex;flex-wrap:wrap;gap:14px}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-weight:600;letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums}
+.pos{color:var(--green-bright)} .neg{color:var(--orange-light)} .bad{color:var(--red)}
+.phone{border-radius:56px;border:13px solid #0A0B14;background:#0A0B14;box-shadow:0 30px 60px rgba(18,22,62,.25);overflow:hidden;flex:none}
+.phone img{display:block;width:100%;height:auto;border-radius:43px}
+.blank{display:block;height:58px;border-bottom:3px dashed var(--lavender-deep)}
+.blank.short{height:46px}
+.pending{font-size:22px;font-weight:700;color:var(--indigo);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.pending:before{content:"";width:12px;height:12px;border-radius:50%;background:var(--orange)}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{font-size:21px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--indigo);text-align:left;padding:0 22px 18px}
+td{font-size:25px;line-height:1.38;padding:22px;border-top:1.5px solid var(--line);vertical-align:top}
+/* Portada y cierre */
+.cover{padding:96px 120px}
+.cover .brand{display:flex;align-items:center;gap:26px;font-size:28px;font-weight:700;color:var(--hero-muted)}
+.cover .tile{width:112px;height:112px;border-radius:28px;background:var(--white);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.cover .tile img{width:150%;height:150%;object-fit:cover}
+.cover h1{font-size:136px;letter-spacing:-.035em;color:var(--white);margin-top:120px}
+.cover .sub{font-size:60px;font-weight:800;color:var(--green-bright);margin-top:18px}
+.cover .lead{color:var(--hero-muted);max-width:980px;font-size:32px;margin-top:34px}
+.cover .who{position:absolute;left:120px;bottom:96px;font-size:36px;font-weight:800}
+.cover .who span{display:block;font-size:24px;font-weight:600;color:var(--hero-muted);margin-top:8px}
+.cover .phone{position:absolute;right:150px;top:110px;width:430px;transform:rotate(3deg)}
+/* Controles (no salen en el PDF ni estorban al grabar) */
+.ui{position:fixed;right:22px;bottom:18px;display:flex;gap:10px;align-items:center;opacity:0;transition:opacity .3s;font-family:Manrope,sans-serif;z-index:5}
+.ui.show{opacity:1}
+.ui button{width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:22px;cursor:pointer}
+.ui button:hover{background:rgba(255,255,255,.28)}
+.ui .help{color:rgba(255,255,255,.7);font-size:14px;margin-right:6px}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html,body{background:none;height:auto}
+  .stage{position:static;transform:none;width:1920px;height:auto}
+  .slide{position:relative;display:flex!important;break-after:page;page-break-after:always}
+  .ui{display:none}
+  .phone,.card{box-shadow:none!important}
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- 1 · Portada -->
+<section class="slide dark cover" data-num="1">
+  <div class="brand"><div class="tile"><img src="assets/necta-icono.png" alt="Necta"></div>Prueba técnica para Agora</div>
+  <h1>Caja a 14 días</h1>
+  <div class="sub">¿Me alcanza la plata?</div>
+  <p class="lead">Un pronóstico de caja para que la dueña de un negocio sepa, con dos semanas de anticipación, si le alcanza la plata y qué hacer hoy.</p>
+  <div class="who">Santiago Pachón Díaz</div>
+  <div class="phone"><img src="assets/capturas/01-inicio.png" alt="Pantalla Caja a 14 días"></div>
+</section>
+
+<!-- 2 · El problema -->
+<section class="slide" data-num="2">
+  <div class="kicker">El problema</div>
+  <h1>Sumado a lo bruto, le sobra plata. <em>Día a día, no.</em></h1>
+  <div class="body">
+    <div class="card" style="flex:1.05;display:flex;flex-direction:column;gap:26px">
+      <h3>Carmen · Limpia Ya · Barranquilla</h3>
+      <ul class="facts">
+        <li>Hoy es <b>lunes 25 de mayo</b></li>
+        <li>Vende a crédito a tiendas y hoteles</li>
+        <li>Registra en Necta <b>1 de cada 4</b> movimientos</li>
+        <li>Trabaja donde no hay señal</li>
+        <li>El viernes le paga <b class="num">$4.200.000</b> al proveedor</li>
+        <li>Necta muestra <b class="num">$1.900.000</b> en caja y banco y <b class="num">$5.600.000</b> por cobrar</li>
+      </ul>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:28px">
+      <div class="card" style="background:#FAFAFA;padding:26px 34px">
+        <p style="font-weight:700;color:var(--ink-faint)">Sumado a lo bruto</p>
+        <div class="num" style="font-size:76px;font-weight:800;color:var(--ink-faint);text-decoration:line-through;text-decoration-thickness:6px;text-decoration-color:var(--red);margin:2px 0 2px">+$7.004.000</div>
+        <p class="num" style="font-size:21px">1.900.000 + 5.600.000 + ventas 3.704.000 − 4.200.000</p>
+      </div>
+      <div class="card navy" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:28px 34px">
+        <p style="font-weight:700">Lo que pasa día a día</p>
+        <div class="row"><span class="d">Vie 29</span><span class="t">Alcanza solo si Hotel Brisas paga el jueves</span></div>
+        <div class="row"><span class="d">Sáb 30</span><span class="t">Ayudantes</span><span class="v neg num">−$136.000</span></div>
+        <div class="row"><span class="d">Lun 1</span><span class="t">Arriendo</span><span class="v neg num">−$1.318.000</span></div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .facts{list-style:none;display:flex;flex-direction:column;gap:26px}
+    .facts li{font-size:30px;line-height:1.35;padding-left:34px;position:relative;color:var(--ink)}
+    .facts li:before{content:"";position:absolute;left:0;top:13px;width:14px;height:14px;border-radius:50%;background:var(--orange)}
+    .row{display:flex;align-items:baseline;gap:22px;font-size:26px;background:var(--navy-inner);border-radius:20px;padding:14px 22px}
+    .row .d{font-weight:800;min-width:110px;color:var(--white)}
+    .row .t{flex:1;color:var(--hero-muted)}
+    .row .v{font-size:38px;font-weight:800}
+  </style>
+</section>
+
+<!-- 3 · La solución -->
+<section class="slide" data-num="3">
+  <div class="kicker">La solución</div>
+  <h1>Un pronóstico día a día, a 14 días, en <em>tres bandas</em></h1>
+  <div class="body">
+    <div class="card" style="flex:none;width:1110px;padding:28px 30px 20px">
+      <div class="legend">
+        <span><i style="background:var(--navy);height:6px"></i>Plata segura</span>
+        <span><i style="background:var(--indigo)"></i>Probable</span>
+        <span><i class="dash"></i>Favorable</span>
+        <span style="margin-left:auto;color:var(--ink-faint);font-weight:600">Saldo al cierre de cada día</span>
+      </div>
+      <svg class="chart" viewBox="0 0 1040 600" width="1040" height="600" role="img" aria-label="Saldo al cierre de cada día en tres bandas, del lunes 25 de mayo al domingo 7 de junio">
+<rect x="170" y="409.2" width="840" height="94.8" fill="#FDE3DE"/>
+<line x1="170" x2="1010" y1="504.0" y2="504.0" stroke="#E9E4F2" stroke-width="1.5"/>
+<text x="154" y="511.0" text-anchor="end" class="ax">−$2.000.000</text>
+<line x1="170" x2="1010" y1="409.2" y2="409.2" stroke="#E23F24" stroke-width="2.5"/>
+<text x="154" y="416.2" text-anchor="end" class="ax">$0</text>
+<line x1="170" x2="1010" y1="314.4" y2="314.4" stroke="#E9E4F2" stroke-width="1.5"/>
+<text x="154" y="321.4" text-anchor="end" class="ax">$2.000.000</text>
+<line x1="170" x2="1010" y1="219.6" y2="219.6" stroke="#E9E4F2" stroke-width="1.5"/>
+<text x="154" y="226.6" text-anchor="end" class="ax">$4.000.000</text>
+<line x1="170" x2="1010" y1="124.8" y2="124.8" stroke="#E9E4F2" stroke-width="1.5"/>
+<text x="154" y="131.8" text-anchor="end" class="ax">$6.000.000</text>
+<line x1="170" x2="1010" y1="30.0" y2="30.0" stroke="#E9E4F2" stroke-width="1.5"/>
+<text x="154" y="37.0" text-anchor="end" class="ax">$8.000.000</text>
+<text x="170.0" y="542" text-anchor="middle" class="axd">L</text>
+<text x="170.0" y="570" text-anchor="middle" class="axn">25</text>
+<text x="234.6" y="542" text-anchor="middle" class="axd">M</text>
+<text x="234.6" y="570" text-anchor="middle" class="axn">26</text>
+<text x="299.2" y="542" text-anchor="middle" class="axd">M</text>
+<text x="299.2" y="570" text-anchor="middle" class="axn">27</text>
+<text x="363.8" y="542" text-anchor="middle" class="axd">J</text>
+<text x="363.8" y="570" text-anchor="middle" class="axn">28</text>
+<text x="428.5" y="542" text-anchor="middle" class="axd">V</text>
+<text x="428.5" y="570" text-anchor="middle" class="axn">29</text>
+<text x="493.1" y="542" text-anchor="middle" class="axd red">S</text>
+<text x="493.1" y="570" text-anchor="middle" class="axn red">30</text>
+<text x="557.7" y="542" text-anchor="middle" class="axd">D</text>
+<text x="557.7" y="570" text-anchor="middle" class="axn">31</text>
+<text x="622.3" y="542" text-anchor="middle" class="axd red">L</text>
+<text x="622.3" y="570" text-anchor="middle" class="axn red">1</text>
+<text x="686.9" y="542" text-anchor="middle" class="axd">M</text>
+<text x="686.9" y="570" text-anchor="middle" class="axn">2</text>
+<text x="751.5" y="542" text-anchor="middle" class="axd">M</text>
+<text x="751.5" y="570" text-anchor="middle" class="axn">3</text>
+<text x="816.2" y="542" text-anchor="middle" class="axd">J</text>
+<text x="816.2" y="570" text-anchor="middle" class="axn">4</text>
+<text x="880.8" y="542" text-anchor="middle" class="axd">V</text>
+<text x="880.8" y="570" text-anchor="middle" class="axn">5</text>
+<text x="945.4" y="542" text-anchor="middle" class="axd">S</text>
+<text x="945.4" y="570" text-anchor="middle" class="axn">6</text>
+<text x="1010.0" y="542" text-anchor="middle" class="axd">D</text>
+<text x="1010.0" y="570" text-anchor="middle" class="axn">7</text>
+<polyline points="170.0,307.4 234.6,255.3 299.2,243.6 363.8,75.4 428.5,198.1 493.1,236.7 557.7,236.7 622.3,290.3 686.9,282.2 751.5,274.2 816.2,266.1 880.8,225.6 945.4,205.2 1010.0,205.2" fill="none" stroke="#9BA1E0" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 8"/>
+<polyline points="170.0,319.7 234.6,308.0 299.2,296.2 363.8,184.9 428.5,327.8 493.1,366.4 557.7,366.4 622.3,419.9 686.9,411.9 751.5,403.8 816.2,395.7 880.8,355.2 945.4,334.8 1010.0,294.5" fill="none" stroke="#4147A4" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+<polyline points="170.0,325.9 234.6,320.3 299.2,314.7 363.8,209.6 428.5,364.7 493.1,415.6 557.7,415.6 622.3,471.7 686.9,466.1 751.5,460.5 816.2,454.9 880.8,419.3 945.4,403.8 1010.0,403.8" fill="none" stroke="#12163E" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" />
+<circle cx="170.0" cy="325.9" r="5.5" fill="#12163E" stroke="#fff" stroke-width="2"/>
+<circle cx="234.6" cy="320.3" r="5.5" fill="#12163E" stroke="#fff" stroke-width="2"/>
+<circle cx="299.2" cy="314.7" r="5.5" fill="#12163E" stroke="#fff" stroke-width="2"/>
+<circle cx="363.8" cy="209.6" r="5.5" fill="#12163E" stroke="#fff" stroke-width="2"/>
+<circle cx="428.5" cy="364.7" r="5.5" fill="#12163E" stroke="#fff" stroke-width="2"/>
+<circle cx="493.1" cy="415.6" r="9" fill="#E23F24" stroke="#fff" stroke-width="3"/>
+<circle cx="557.7" cy="415.6" r="5.5" fill="#E23F24" stroke="#fff" stroke-width="2"/>
+<circle cx="622.3" cy="471.7" r="9" fill="#E23F24" stroke="#fff" stroke-width="3"/>
+<circle cx="686.9" cy="466.1" r="5.5" fill="#E23F24" stroke="#fff" stroke-width="2"/>
+<circle cx="751.5" cy="460.5" r="5.5" fill="#E23F24" stroke="#fff" stroke-width="2"/>
+<circle cx="816.2" cy="454.9" r="5.5" fill="#E23F24" stroke="#fff" stroke-width="2"/>
+<circle cx="880.8" cy="419.3" r="5.5" fill="#E23F24" stroke="#fff" stroke-width="2"/>
+<circle cx="945.4" cy="403.8" r="5.5" fill="#12163E" stroke="#fff" stroke-width="2"/>
+<circle cx="1010.0" cy="403.8" r="5.5" fill="#12163E" stroke="#fff" stroke-width="2"/>
+<text x="475.1" y="449.6" text-anchor="end" class="callout">Sáb 30: −$136.000</text>
+<text x="640.3" y="499.7" text-anchor="start" class="callout">Lun 1: −$1.318.000</text>
+</svg>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:20px">
+      <div class="card q"><div class="qh">¿Qué pasa y cuándo?</div><p>El sábado 30 faltan <b class="num">$136.000</b> para los ayudantes.</p></div>
+      <div class="card q"><div class="qh">¿De qué cobro depende?</div><p>El viernes alcanza solo si Hotel Brisas paga el jueves.</p></div>
+      <div class="card q"><div class="qh">¿Qué hago hoy?</div><p>Cobrarle a Hotel Brisas, a La Esquina y a Doña Fina.</p></div>
+      <div class="chips" style="margin-top:6px">
+        <span class="chip green">Funciona sin señal</span>
+        <span class="chip">Cada cifra sale de una regla explicable</span>
+        <span class="chip">Sirve para cualquier tienda</span>
+      </div>
+    </div>
+  </div>
+  <style>
+    .legend{display:flex;gap:30px;align-items:center;font-size:21px;font-weight:700;margin:4px 0 6px 10px}
+    .legend span{display:flex;align-items:center;gap:12px;white-space:nowrap}
+    .legend i{display:inline-block;width:40px;height:4px;border-radius:4px}
+    .legend i.dash{background:repeating-linear-gradient(90deg,var(--periwinkle) 0 10px,transparent 10px 18px)}
+    .chart .ax{font:600 19px Manrope,sans-serif;fill:#999999}
+    .chart .axd{font:800 19px Manrope,sans-serif;fill:#666666}
+    .chart .axn{font:600 17px Manrope,sans-serif;fill:#999999}
+    .chart .red{fill:#E23F24}
+    .chart .callout{font:800 22px Manrope,sans-serif;fill:#E23F24}
+    .q{padding:22px 30px}
+    .q .qh{font-size:27px;font-weight:800;margin-bottom:8px}
+    .q p{font-size:25px}
+  </style>
+</section>
+
+<!-- 4 · Cómo está estructurada -->
+<section class="slide" data-num="4">
+  <div class="kicker">Cómo está estructurada</div>
+  <h1>Cuatro piezas y <em>un solo motor</em></h1>
+  <div class="body" style="flex-direction:column;gap:0">
+    <div style="display:flex;gap:32px;flex:1">
+      <div class="card col"><div class="tag" style="background:#DBE4FF;color:#2B4FB8">App</div>
+        <div class="where">En la calle, con sol, con una mano y sin señal</div>
+        <div class="chips"><span class="chip">Expo SDK 58</span><span class="chip">React Native 0.88</span><span class="chip">TypeScript</span><span class="chip">SQLite local con PowerSync</span><span class="chip">Expo Push</span></div>
+        <p>La pantalla, el registro de cobros y pagos fijos, y los avisos. Recalcula aunque no haya señal.</p></div>
+      <div class="card col"><div class="tag" style="background:#E5DBFF;color:#5B3DB5">Web</div>
+        <div class="where">Con calma, desde el computador</div>
+        <div class="chips"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Sin datos locales</span></div>
+        <p>Las tres bandas en el tiempo y un simulador de «¿qué pasa si este cliente se atrasa?». Lee la API y no guarda nada.</p></div>
+      <div class="card col"><div class="tag" style="background:#D3F9D8;color:#1E7A35">Backend</div>
+        <div class="where">La fuente de verdad</div>
+        <div class="chips"><span class="chip">Node.js</span><span class="chip">MongoDB Atlas</span><span class="chip">Redis + BullMQ</span><span class="chip">PowerSync Service</span></div>
+        <p>Pronóstico oficial ya calculado por tienda, cobros sin duplicados, trabajos nocturnos y avisos por push, WhatsApp y correo.</p></div>
+    </div>
+    <div class="pipes"><i></i><i></i><i></i></div>
+    <div class="card navy engine">
+      <div><div style="font-size:22px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--periwinkle)">Librería transversal</div>
+      <div class="mono" style="font-size:42px;margin-top:6px;white-space:nowrap">@necta/cashflow-engine</div></div>
+      <div class="chips" style="justify-content:flex-end"><span class="chip dark">TypeScript puro</span><span class="chip dark">Sin dependencias</span><span class="chip dark">Sin red ni base de datos</span><span class="chip dark" style="color:var(--green-bright)">El mismo código en los tres</span></div>
+    </div>
+  </div>
+  <style>
+    .col{flex:1;display:flex;flex-direction:column;gap:22px}
+    .col .tag{align-self:flex-start;font-size:30px;font-weight:800;border-radius:16px;padding:8px 22px}
+    .col .where{font-size:23px;font-weight:700;color:var(--ink-muted)}
+    .col .chip{font-size:20px;padding:8px 18px}
+    .col p{font-size:24px;color:var(--ink)}
+    .pipes{display:flex;height:40px}
+    .pipes i{flex:1;position:relative}
+    .pipes i:after{content:"";position:absolute;left:50%;top:0;bottom:0;width:6px;margin-left:-3px;background:var(--navy);border-radius:3px}
+    .engine{display:flex;align-items:center;justify-content:space-between;gap:30px;padding:30px 40px}
+  </style>
+</section>
+
+<!-- 5 · El motor por dentro -->
+<section class="slide" data-num="5">
+  <div class="kicker">El motor por dentro</div>
+  <h1><span class="mono" style="font-size:52px">buildForecast(tienda, fecha)</span> → <em>14 días</em>, en 9 pasos</h1>
+  <div class="body" style="gap:40px">
+    <div class="steps">
+      <div class="step"><b>1</b><h4>Punto de partida</h4><p>Si el saldo guardado y el de los movimientos no coinciden, la banda segura arranca en el menor.</p></div>
+      <div class="step"><b>2</b><h4>Cobros por cliente</h4><p>Un perfil por historial da una probabilidad y una fecha distinta en cada banda.</p></div>
+      <div class="step"><b>3</b><h4>Ritmo de ventas</h4><p>Ventas de contado por día de la semana, con días cerrados y quincena.</p></div>
+      <div class="step"><b>4</b><h4>Salidas</h4><p>Proveedores y pagos fijos, en su fecha.</p></div>
+      <div class="step"><b>5</b><h4>Simulación día a día</h4><p>Banda por banda: marca el primer hueco y el peor.</p></div>
+      <div class="step"><b>6</b><h4>Dependencias y muro</h4><p>Qué cobro sostiene cada día y los 4 días seguidos con más salidas.</p></div>
+      <div class="step"><b>7</b><h4>Certeza</h4><p>Un puntaje con sus razones.</p></div>
+      <div class="step"><b>8</b><h4>Acciones</h4><p>Ordenadas por cuánto tapan el hueco, su probabilidad y su urgencia.</p></div>
+      <div class="step"><b>9</b><h4>Veredicto</h4><p>Una frase sin jerga.</p></div>
+    </div>
+    <div style="flex:none;width:690px;display:flex;flex-direction:column;gap:22px">
+      <div class="card" style="padding:28px 30px 10px">
+        <div style="font-size:24px;font-weight:800;margin:0 0 14px 4px">Paso 2 · Perfil del cliente</div>
+        <table class="profiles">
+          <tr><th>Perfil</th><th>Cuándo</th><th>¿Plata segura?</th></tr>
+          <tr><td><b>Confiable</b></td><td>3 ventas o más y paga a tiempo el 75 % o más</td><td>Si paga a tiempo el 80 % o más, en su fecha más tardía</td></tr>
+          <tr><td><b>Irregular</b></td><td>3 ventas o más y paga a tiempo menos del 75 %</td><td>Solo si la probabilidad llega a 0,8</td></tr>
+          <tr><td><b>Historial corto</b></td><td>Menos de 3 ventas</td><td>No</td></tr>
+          <tr><td><b>Vencida</b></td><td>Ya pasó su fecha</td><td>No</td></tr>
+        </table>
+      </div>
+      <div class="card" style="background:var(--orange-soft);border-color:var(--orange-soft);padding:24px 30px">
+        <h3 style="color:var(--orange-deep);font-size:27px">Una factura entra entera o no entra</h3>
+        <p style="font-size:22px;color:var(--ink)">Nunca se reparte un monto por probabilidad.</p>
+      </div>
+    </div>
+  </div>
+  <div class="enginefoot">Determinista: misma entrada, misma salida · unas 1.500 líneas de TypeScript · todos los parámetros en un archivo de reglas con versión <span class="mono">2026.05.r2</span></div>
+  <style>
+    .steps{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-content:start}
+    .step{background:var(--white);border:1.5px solid var(--line);border-radius:26px;padding:20px 24px;display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:center}
+    .step b{display:inline-flex;width:44px;height:44px;border-radius:50%;background:var(--navy);color:var(--white);align-items:center;justify-content:center;font-size:22px;font-weight:800}
+    .step h4{font-size:24px;font-weight:800;line-height:1.15}
+    .step p{grid-column:1 / -1;font-size:20px;line-height:1.36;color:var(--ink-muted);margin-top:10px}
+    .profiles th{font-size:17px;padding:0 12px 12px}
+    .profiles td{font-size:19px;padding:13px 12px;line-height:1.3}
+    .enginefoot{font-size:22px;font-weight:600;color:var(--indigo-deep);margin-top:22px}
+  </style>
+</section>
+
+<!-- 6 · La técnica -->
+<section class="slide" data-num="6">
+  <div class="kicker">La técnica</div>
+  <h1>Reglas deterministas sobre <em>cómo paga cada cliente</em></h1>
+  <div class="body" style="gap:26px;margin-top:30px">
+    <div class="card" style="flex:none;width:1030px;padding:26px 28px 18px">
+      <div class="tt-h"><b>1 · Perfil por cliente → 2 · probabilidad y fecha por banda</b><span>Con sus ventas a crédito, su porcentaje de pagos a tiempo y su atraso medio</span></div>
+      <table class="tt">
+        <tr><th>Perfil</th><th>Probabilidad de cobro</th><th>Plata segura</th><th>Probable</th><th>Favorable</th></tr>
+        <tr><td><b>Confiable</b><br><span>3 ventas o más · a tiempo ≥ 75 %</span></td><td>Su % a tiempo (tope 0,95)</td><td>Vence + atraso típico</td><td>Vence + parte del atraso</td><td>Vence</td></tr>
+        <tr><td><b>Irregular</b><br><span>3 ventas o más · a tiempo &lt; 75 %</span></td><td>Su % a tiempo + la mitad del resto, si su fecha típica cae en los 14 días</td><td>Solo si p ≥ 0,8</td><td>Si p ≥ 0,5</td><td>Vence</td></tr>
+        <tr><td><b>Historial corto</b><br><span>menos de 3 ventas</span></td><td>0,5 · con la señal de otras tiendas si hay 3 comercios o más</td><td>No</td><td>Vence + atraso</td><td>Vence</td></tr>
+        <tr><td><b>Vencida</b><br><span>dentro / más de lo habitual</span></td><td>0,6 / 0,25</td><td>No</td><td>Solo dentro de lo habitual: vence + atraso típico</td><td>Hoy + 3</td></tr>
+      </table>
+      <div class="tt-rule">Entra en <b>plata segura</b> con p ≥ 0,8 en su fecha más tardía · en <b>probable</b> con p ≥ 0,5 en su fecha esperada · en <b>favorable</b> todo en su vencimiento. Una factura entra entera o no entra.</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:20px">
+      <div class="card tc"><b>3 · Simulación día a día, por banda</b>
+        <div class="mono f">saldo = anterior + ventas − gastos + cobros − pagos</div>
+        <p>Ventas por día de la semana: la segura cuenta el 80 % y sin quincena; probable y favorable, +30 % en quincena. Marca el primer hueco y el peor. Las dependencias salen quitando cada cobro, uno a uno.</p></div>
+      <div class="card tc"><b>4 · Certeza y acciones, explicadas</b>
+        <div class="mono f">certeza = 1 − Σ penalizaciones</div>
+        <p>Registro parcial (1 − registro) × 0,5 · descuadre hasta 0,3 · clientes nuevos · pagos fijos sin confirmar.</p>
+        <div class="mono f">acción = cubre hueco × probabilidad × urgencia + 0,1 × amplitud</div></div>
+    </div>
+  </div>
+  <div class="tt-foot"><span class="chip">Determinista · parámetros versionados 2026.05.r2 · 0,27 ms</span><span><b>Descartado:</b> ARIMA / Prophet (26 semanas con el 25 % registrado: sobreajusta y no se explica en una tarjeta) y un modelo de lenguaje para cifras (no hace aritmética fiable ni corre sin señal). Entrarían después, con miles de tiendas, si le ganan a las reglas en el backtesting.</span></div>
+  <style>
+    .tt-h{display:flex;flex-direction:column;gap:4px;margin:0 0 14px 4px}
+    .tt-h b{font-size:25px} .tt-h span{font-size:19px;color:var(--ink-muted)}
+    .tt th{font-size:16px;padding:0 10px 10px}
+    .tt td{font-size:19px;padding:12px 10px;line-height:1.28}
+    .tt td span{font-size:15px;color:var(--ink-muted)}
+    .tt-rule{margin-top:14px;font-size:19px;line-height:1.35;color:var(--indigo-deep);background:var(--lavender);border-radius:16px;padding:12px 16px}
+    .tc{padding:22px 28px;display:flex;flex-direction:column;gap:10px}
+    .tc b{font-size:24px}
+    .tc .f{font-size:20px;background:var(--navy);color:#fff;border-radius:12px;padding:8px 14px;align-self:flex-start}
+    .tc p{font-size:19px;line-height:1.36}
+    .tt-foot{display:flex;align-items:center;gap:22px;margin-top:22px;font-size:18px;line-height:1.35;color:var(--ink-muted)}
+    .tt-foot .chip{flex:none;font-size:18px}
+  </style>
+</section>
+
+<!-- 7 · El diagrama (cuatro vistas) -->
+<section class="slide" data-num="7">
+  <div class="kicker">El diagrama de arquitectura</div>
+  <h1>Qué corre en el teléfono, <em>en la web y en el servidor</em></h1>
+  <div class="body" style="gap:44px;margin-top:34px">
+    <div class="card" style="flex:none;width:820px;padding:14px;display:flex;align-items:center;justify-content:center">
+      <img src="assets/diagrama/completo.svg" alt="Diagrama completo" style="height:722px;width:auto;display:block">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:22px">
+      <div class="card" style="padding:28px 32px">
+        <div class="lg"><i style="border:4px solid #15803d;background:#b2f2bb"></i><span><b>Verde continuo</b><br>existe en el prototipo</span></div>
+        <div class="lg" style="margin-top:18px"><i style="border:4px dashed #6b6b6b;background:#fff3bf"></i><span><b>Punteado</b><br>falta por construir</span></div>
+      </div>
+      <div class="card" style="padding:28px 32px;flex:1">
+        <div style="font-size:24px;font-weight:800;margin-bottom:16px">Zonas</div>
+        <div class="zones">
+          <span><i style="background:#dbe4ff"></i>Teléfono</span><span><i style="background:#e5dbff"></i>Web</span>
+          <span><i style="background:#d3f9d8"></i>Servidor</span><span><i style="background:#c3fae8"></i>Datos</span>
+          <span><i style="background:#ffd8a8"></i>Integraciones</span><span><i style="background:#fff3bf"></i>Flujo sin señal</span>
+          <span><i style="background:#ffc9c9"></i>Fallas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .lg{display:flex;align-items:center;gap:20px;font-size:24px;line-height:1.3}
+    .lg i{width:64px;height:40px;border-radius:10px;flex:none}
+    .zones{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+    .zones span{display:flex;align-items:center;gap:14px;font-size:23px;font-weight:600}
+    .zones i{width:30px;height:30px;border-radius:8px;flex:none;border:1.5px solid rgba(0,0,0,.08)}
+  </style>
+</section>
+
+<section class="slide" data-num="8">
+  <div class="kicker">El diagrama de arquitectura</div>
+  <h1>Teléfono, web, integraciones y servidor</h1>
+  <div class="body" style="margin-top:34px">
+    <div class="card" style="flex:1;padding:16px;display:flex;align-items:center;justify-content:center">
+      <img src="assets/diagrama/arquitectura.svg" alt="Teléfono, web, integraciones y servidor" style="width:100%;height:auto;display:block">
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-num="9">
+  <div class="kicker">El diagrama de arquitectura</div>
+  <h1>El flujo central: <em>un abono sin señal</em></h1>
+  <div class="body" style="flex-direction:column;gap:28px;margin-top:40px">
+    <div class="card" style="padding:18px;display:flex;justify-content:center">
+      <img src="assets/diagrama/flujo.svg" alt="Flujo de un abono registrado sin señal" style="width:1640px;height:auto;display:block">
+    </div>
+    <div style="display:flex;gap:24px">
+      <div class="card navy" style="flex:1;padding:26px 34px"><p style="font-size:24px"><b style="color:#fff">De vuelta:</b> MongoDB → PowerSync Service → base local del teléfono</p></div>
+      <div class="card" style="flex:none;padding:26px 34px;background:var(--orange-soft);border-color:var(--orange-soft)"><p style="font-size:24px;color:var(--orange-deep);font-weight:800">Nada se fusiona en silencio</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-num="10">
+  <div class="kicker">El diagrama de arquitectura</div>
+  <h1>Doce fallas, <em>cada una con su respuesta</em></h1>
+  <div class="body" style="margin-top:40px;align-items:flex-start">
+    <div class="card" style="flex:1;padding:18px;display:flex;justify-content:center">
+      <img src="assets/diagrama/fallas.svg" alt="Fallas y respuesta del sistema" style="width:1640px;height:auto;display:block">
+    </div>
+  </div>
+</section>
+
+<!-- 8 · Identidad visual -->
+<section class="slide" data-num="11">
+  <div class="kicker">La pantalla</div>
+  <h1>La identidad de Necta, <em>hecha para la calle</em></h1>
+  <div class="body" style="gap:70px;margin-top:36px">
+    <div class="phone" style="width:336px;align-self:flex-start"><img src="assets/capturas/01-inicio.png" alt="Pantalla Caja a 14 días"></div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:24px">
+      <div class="swatches">
+        <div><i style="background:#12163E"></i><b>Azul marino</b><span class="mono">#12163E</span><em>Tarjeta principal</em></div>
+        <div><i style="background:#49E68C"></i><b>Verde</b><span class="mono">#49E68C</span><em>Cifras que alcanzan</em></div>
+        <div><i style="background:#FCAD75"></i><b>Naranja claro</b><span class="mono">#FCAD75</span><em>Cifras que faltan</em></div>
+        <div><i style="background:#F26938"></i><b>Naranja</b><span class="mono">#F26938</span><em>Acción principal</em></div>
+        <div><i style="background:#EAEAF6;border:1.5px solid #D5DFF3"></i><b>Lavanda</b><span class="mono">#EAEAF6</span><em>Información</em></div>
+      </div>
+      <div style="display:flex;gap:24px">
+        <div class="card" style="flex:none;width:400px;padding:26px 32px">
+          <div style="font-size:21px;font-weight:700;color:var(--ink-muted)">Tipografía</div>
+          <div style="font-size:72px;font-weight:800;line-height:1.05;margin-top:6px">Manrope</div>
+          <div style="font-size:24px;margin-top:8px"><span style="font-weight:400">Regular</span> · <span style="font-weight:700">Bold</span> · <span style="font-weight:800">ExtraBold</span></div>
+        </div>
+        <div class="card navy" style="flex:1;padding:26px 32px">
+          <div style="font-size:21px;font-weight:700;color:var(--hero-muted)">Contraste de las cifras · verificado en pruebas</div>
+          <div class="ratios">
+            <span><b class="pos num">10,7:1</b>verde sobre azul marino</span>
+            <span><b class="neg num">9,4:1</b>naranja claro sobre azul marino</span>
+            <span><b class="num">17,4:1</b>blanco sobre azul marino</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:24px">
+        <div class="card rule"><b>7:1 o más</b><span>en todas las cifras, para leerse al sol</span></div>
+        <div class="card rule"><b>Una columna</b><span>el titular primero</span></div>
+        <div class="card rule"><b>48 puntos o más</b><span>en cada botón, al alcance del pulgar</span></div>
+      </div>
+      <p style="font-size:20px;color:var(--ink-faint)">Colores y letra tomados del sistema de diseño público de Necta y de su app.</p>
+    </div>
+  </div>
+  <style>
+    .swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+    .swatches div{background:var(--white);border:1.5px solid var(--line);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:4px}
+    .swatches i{display:block;height:84px;border-radius:16px;margin-bottom:10px}
+    .swatches b{font-size:21px;font-weight:800}
+    .swatches span{font-size:17px;color:var(--ink-muted)}
+    .swatches em{font-style:normal;font-size:18px;color:var(--ink-muted)}
+    .ratios{display:flex;gap:30px;margin-top:14px}
+    .ratios span{display:flex;flex-direction:column;font-size:19px;color:var(--hero-muted)}
+    .ratios b{font-size:48px;font-weight:800;color:#fff;line-height:1.1}
+    .ratios b.pos{color:var(--green-bright)} .ratios b.neg{color:var(--orange-light)}
+    .rule{flex:1;padding:22px 28px;display:flex;flex-direction:column;gap:4px}
+    .rule b{font-size:30px;font-weight:800;color:var(--orange)}
+    .rule span{font-size:21px;color:var(--ink-muted)}
+  </style>
+</section>
+
+<!-- 9 · La pantalla en vivo -->
+<section class="slide" data-num="12">
+  <div class="kicker">La pantalla en vivo</div>
+  <h1>Sin señal, <em>se recalcula en el acto</em></h1>
+  <div class="body" style="gap:34px;margin-top:34px">
+    <div class="shots">
+      <figure><div class="phone"><img src="assets/capturas/05-sin-senal.png" alt="Sin señal"></div><figcaption><b>1</b>Sin señal: el pronóstico con su hora</figcaption></figure>
+      <figure><div class="phone"><img src="assets/capturas/06-hoja-de-abono.png" alt="Hoja de abono"></div><figcaption><b>2</b>Registra $300.000 de Hotel Brisas</figcaption></figure>
+      <figure><div class="phone"><img src="assets/capturas/07-pendiente.png" alt="Pendiente de sincronizar"></div><figcaption><b>3</b>Pendiente de sincronizar; el viernes ya depende de $862.000</figcaption></figure>
+      <figure><div class="phone"><img src="assets/capturas/09-abono-guardado.png" alt="Abono guardado"></div><figcaption><b>4</b>Vuelve la señal: «Abono guardado»</figcaption></figure>
+    </div>
+    <div class="card navy speed">
+      <div style="font-size:21px;font-weight:700;color:var(--hero-muted)">Velocidad del motor</div>
+      <div><b class="pos num" style="font-size:80px">0,27 ms</b><span>por pronóstico, caso de Carmen a 14 días</span></div>
+      <div><b class="num">2,7 ms</b><span>con 200 cuentas por cobrar a 60 días</span></div>
+      <div><b class="num neg">50 ms</b><span>presupuesto en un Android de gama baja</span></div>
+      <p style="font-size:17px;margin-top:auto">Medido en un Apple M4 Pro con Node 24. No se midió en un teléfono.</p>
+      <div class="chip green" style="align-self:flex-start">66 pruebas en verde</div>
+    </div>
+  </div>
+  <style>
+    .shots{flex:1;display:flex;gap:26px}
+    .shots figure{flex:1;display:flex;flex-direction:column;gap:16px}
+    .shots .phone{border-width:9px;border-radius:40px}
+    .shots .phone img{border-radius:31px}
+    .shots figcaption{font-size:20px;line-height:1.35;font-weight:600;display:flex;gap:12px}
+    .shots figcaption b{flex:none;width:34px;height:34px;border-radius:50%;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+    .speed{flex:none;width:400px;display:flex;flex-direction:column;gap:22px;padding:30px 32px}
+    .speed div b{display:block;font-size:52px;font-weight:800;line-height:1.05;color:#fff}
+    .speed div b.pos{color:var(--green-bright)} .speed div b.neg{color:var(--orange-light)}
+    .speed div span{font-size:19px;color:var(--hero-muted)}
+  </style>
+</section>
+
+<!-- 10 · Tiempo -->
+<section class="slide" data-num="13">
+  <div class="kicker">Tiempo</div>
+  <h1>Cuánto tiempo y <em>en qué</em></h1>
+  <div class="body" style="gap:48px;align-items:flex-start">
+    <div class="card" style="flex:none;width:1060px;padding:24px 34px">
+      <div class="tm"><span>Entender el caso</span><i style="width:75%"></i><b>30 min</b></div>
+      <div class="tm"><span>Motor y pantalla</span><i style="width:100%"></i><b>40 min</b></div>
+      <div class="tm"><span>Diagrama</span><i style="width:100%"></i><b>40 min</b></div>
+      <div class="tm"><span>Revisar lo que propuso la IA</span><i style="width:75%"></i><b>30 min</b></div>
+      <div class="tm total"><span>Total</span><i></i><b>2 h 20 min</b></div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:24px">
+      <div class="card lav"><p style="color:var(--indigo-deep);font-size:26px">La prueba sugería <b>2 horas</b>; fueron <b>2 h 20 min</b>.</p></div>
+      <div class="card"><h3>Dónde profundicé</h3><p style="margin-top:10px">En las especificaciones, el cálculo y el trabajo sin señal.</p></div>
+    </div>
+  </div>
+  <style>
+    .tm{display:grid;grid-template-columns:400px 1fr 170px;align-items:center;gap:26px;padding:22px 0;border-top:1.5px solid var(--line);font-size:28px}
+    .tm:first-child{border-top:0}
+    .tm i{display:block;height:22px;border-radius:11px;background:var(--navy)}
+    .tm b{text-align:right;font-weight:800;white-space:nowrap}
+    .tm.total{border-top:3px solid var(--navy);font-weight:800}
+    .tm.total i{background:none}
+  </style>
+</section>
+
+<!-- 11 · Cómo usé la IA -->
+<section class="slide" data-num="14">
+  <div class="kicker">Cómo usé la IA</div>
+  <h1>Dos prompts clave y <em>algo que corregí</em></h1>
+  <div class="body" style="gap:30px;margin-top:34px">
+    <div style="flex:1.2;display:flex;flex-direction:column;gap:22px">
+      <div class="prompt"><div class="ph"><span class="av">S</span><div><b>Prompt 1 · La solución y su arquitectura</b><span>Con el PDF del caso adjunto</span></div></div>
+        <div class="chips">
+          <span class="chip">Actúa como arquitecto de Necta</span><span class="chip">El PDF es la única fuente de verdad</span><span class="chip">Cambio OpenSpec completo</span><span class="chip">Cada número sale de una regla versionada</span><span class="chip">Cero jerga contable</span><span class="chip">Campos reales de la API</span><span class="chip">Qué calcula el teléfono, la web y el servidor</span><span class="chip">Sincronizar sin duplicar abonos</span><span class="chip">Cada decisión con su alternativa descartada</span><span class="chip">Escenarios WHEN / THEN</span>
+        </div></div>
+      <div class="prompt"><div class="ph"><span class="av">S</span><div><b>Prompt 2 · El diagrama a detalle y cómo entregarlo</b><span>A partir del design.md</span></div></div>
+        <div class="chips">
+          <span class="chip">Excalidraw</span><span class="chip">Zonas: teléfono · web · servidor · datos · integraciones</span><span class="chip">El flujo de un abono sin señal, paso a paso</span><span class="chip">12 fallas con su respuesta</span><span class="chip">Verde = existe · punteado = por construir</span><span class="chip">Generado por script: nada se desalinea</span><span class="chip">Ningún texto desborda su caja</span><span class="chip">.excalidraw + .svg + .png + README</span>
+        </div></div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="card fix no"><div class="fh">La IA propuso</div>
+        <div class="fi"><i>✕</i><div><b>Un endpoint de backend</b> como implementación parcial</div></div>
+        <div class="fi"><i>✕</i><div><b>Sincronización hecha a mano</b>: cola, reintentos y conflictos propios</div></div></div>
+      <div class="arrow">↓</div>
+      <div class="card fix yes"><div class="fh">Lo que decidí</div>
+        <div class="fi"><i>✓</i><div><b>Diagrama de arquitectura</b>: el diseño del backend no queda de lado</div></div>
+        <div class="fi"><i>✓</i><div><b>Pantalla en React Native</b>: muestra mi capacidad</div></div>
+        <div class="fi"><i>✓</i><div><b>PowerSync</b> como capa de sincronización</div></div>
+        <div class="why">Mi experiencia está en frontend y mobile</div></div>
+    </div>
+  </div>
+  <style>
+    .prompt{background:var(--lavender);border-radius:28px;padding:22px 26px;display:flex;flex-direction:column;gap:14px}
+    .ph{display:flex;align-items:center;gap:14px}
+    .ph .av{width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex:none}
+    .ph b{font-size:23px;display:block} .ph span{font-size:17px;color:var(--ink-muted)}
+    .prompt .chip{background:var(--white);color:var(--indigo-deep);font-size:18px;padding:7px 14px}
+    .fix{padding:22px 28px;display:flex;flex-direction:column;gap:12px}
+    .fix.no{background:var(--red-soft);border-color:var(--red-soft)} .fix.yes{background:var(--green-soft);border-color:var(--green-soft)}
+    .fh{font-size:19px;font-weight:800;letter-spacing:.1em;text-transform:uppercase} .no .fh{color:var(--red)} .yes .fh{color:var(--green)}
+    .fi{display:flex;gap:12px;align-items:flex-start;font-size:21px;line-height:1.32}
+    .fi i{font-style:normal;font-weight:800;flex:none;width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:16px;color:#fff;margin-top:1px}
+    .no .fi i{background:var(--red)} .yes .fi i{background:var(--green)}
+    .arrow{text-align:center;font-size:34px;font-weight:800;color:var(--indigo);line-height:1}
+    .why{margin-top:4px;align-self:flex-start;background:var(--white);border-radius:999px;padding:8px 16px;font-size:18px;font-weight:700;color:var(--indigo-deep)}
+  </style>
+</section>
+
+<!-- 12 · El siguiente nivel -->
+<section class="slide" data-num="15">
+  <div class="kicker">El siguiente nivel</div>
+  <h1>Llevarlo más lejos, <em>pensando en la meta</em></h1>
+  <div class="card lav" style="margin-top:40px;padding:30px 40px">
+    <div style="font-size:21px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo)">La meta del caso</div>
+    <p style="font-size:32px;line-height:1.35;color:var(--indigo-deep);font-weight:700;margin-top:8px">Que la dueña vea con al menos una semana de anticipación si su caja va a cubrir lo que debe, y que sepa qué hacer.</p>
+  </div>
+  <div class="body" style="gap:28px;margin-top:30px;align-items:flex-start">
+    <div class="card nx"><b>1</b><h3>Medir contra la meta</h3><p>Con qué anticipación vimos cada hueco real, si los avisos terminan en cobros, y calibrar las probabilidades con el backtesting.</p></div>
+    <div class="card nx"><b>2</b><h3>Cerrar el ciclo</h3><p>Que pedir plazo al proveedor sea una propuesta con seguimiento dentro de Necta.</p></div>
+    <div class="card nx"><b>3</b><h3>Más registro con menos esfuerzo</h3><p>Voz y fotos de facturas: cada punto de registro sube la certeza.</p></div>
+  </div>
+  <style>
+    .nx{flex:1;display:flex;flex-direction:column;gap:14px}
+    .nx b{width:52px;height:52px;border-radius:50%;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:26px;font-weight:800}
+  </style>
+</section>
+
+<!-- 13 · Un cambio de opinión técnico -->
+<section class="slide" data-num="16">
+  <div class="kicker">Un cambio de opinión técnico</div>
+  <h1>Landing pages: <em>de Angular a Svelte</em></h1>
+  <div class="body" style="gap:28px;margin-top:34px;align-items:flex-start">
+    <div class="card st"><div class="sh">Qué pasó</div>
+      <div class="big">Angular</div>
+      <p>Landing pages para eventos, en una empresa de marketing. Antes de la IA.</p></div>
+    <div class="card st"><div class="sh">Qué me hizo cambiar</div>
+      <div class="big"><span style="color:var(--ink-faint)">Angular</span> → <em>Svelte</em></div>
+      <p>Las pedían más livianas y más rápidas.</p>
+      <div class="chips"><span class="chip">Velocidad</span><span class="chip">Ligereza</span><span class="chip">No es tan difícil de aprender</span></div></div>
+    <div class="card st navy"><div class="sh">Cómo lo manejé con mi equipo</div>
+      <div class="big pos">1 h al día</div>
+      <p>Preguntas, dudas y mini clases de Svelte que yo dictaba, para que su curva de aprendizaje fuera menos compleja.</p></div>
+  </div>
+  <style>
+    .st{flex:1;display:flex;flex-direction:column;gap:18px;padding:30px 34px}
+    .sh{font-size:19px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo)} .st.navy .sh{color:var(--periwinkle)}
+    .big{font-size:62px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:6px 0}
+    .big em{font-style:normal;color:var(--orange)} .big.pos{color:var(--green-bright)}
+    .st p{font-size:24px;line-height:1.4}
+  </style>
+</section>
+
+<!-- 14 · Cierre -->
+<section class="slide dark cover" data-num="17">
+  <div class="brand"><div class="tile"><img src="assets/necta-icono.png" alt="Necta"></div>Prueba técnica para Agora</div>
+  <h1 style="margin-top:110px">Gracias</h1>
+  <p class="lead" style="max-width:1000px">Una pantalla que Carmen puede leer en la calle, que le dice de qué cobro depende el viernes, funciona sin señal y no le muestra un espejismo, y un plan completo para que el equipo la construya.</p>
+  <div class="who">Santiago Pachón Díaz</div>
+  <div class="phone"><img src="assets/capturas/09-abono-guardado.png" alt="Abono guardado"></div>
+</section>
+
+</div>
+
+<div class="ui" id="ui"><span class="help">← → para avanzar · F pantalla completa</span><button id="prev" aria-label="Anterior">‹</button><button id="next" aria-label="Siguiente">›</button></div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var total=slides.length;
+  slides.forEach(function(s,k){
+    s.dataset.num=k+1;
+    if(s.classList.contains('cover')) return;
+    var f=document.createElement('div'); f.className='foot';
+    f.innerHTML='<span>Caja a 14 días</span><span>'+(k+1)+' / '+total+'</span>';
+    s.appendChild(f);
+  });
+  var i=0;
+  function fromHash(){ var n=parseInt((location.hash||'').slice(1),10); if(n>=1&&n<=slides.length) i=n-1; }
+  function show(){ slides.forEach(function(s,k){ s.classList.toggle('on',k===i); }); history.replaceState(null,'','#'+(i+1)); }
+  function go(d){ i=Math.max(0,Math.min(slides.length-1,i+d)); show(); }
+  function fit(){ var s=Math.min(innerWidth/1920, innerHeight/1080); document.documentElement.style.setProperty('--scale', s); }
+  addEventListener('resize',fit); fit(); fromHash(); show();
+  addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>=0){ e.preventDefault(); go(1); }
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){ e.preventDefault(); go(-1); }
+    else if(e.key==='Home'){ i=0; show(); } else if(e.key==='End'){ i=slides.length-1; show(); }
+    else if(e.key==='f'||e.key==='F'){ if(document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
+  });
+  document.getElementById('prev').onclick=function(){ go(-1); };
+  document.getElementById('next').onclick=function(){ go(1); };
+  var ui=document.getElementById('ui'), t;
+  addEventListener('mousemove',function(){ ui.classList.add('show'); clearTimeout(t); t=setTimeout(function(){ ui.classList.remove('show'); },1800); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1580" height="682" viewBox="10 90 1580 682" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>
+<rect x="10" y="90" width="1580" height="682" fill="#ffffff"/>
+<text x="20.0" y="40.0" font-size="28" fill="#1e1e1e" text-anchor="start"><tspan x="20.0" dy="0.0">Caja a 14 días · arquitectura de la solución</tspan></text>
+<text x="20.0" y="62.0" font-size="16" fill="#6b6b6b" text-anchor="start"><tspan x="20.0" dy="0.0">Teléfono · web · servidor · PowerSync como capa de sincronización · datos · integraciones · fallas · flujo sin señal</tspan></text>
+<rect x="920" y="12" width="340" height="30" rx="10" fill="#b2f2bb" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="1090.0" y="31.2" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1090.0" dy="0.0">✓ prototipo existente (motor + pantalla)</tspan></text>
+<rect x="1270" y="12" width="300" height="30" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1420.0" y="31.2" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1420.0" dy="0.0">por construir (design.md · tasks.md)</tspan></text>
+<rect x="20" y="100" width="500" height="660" rx="10" fill="#dbe4ff" fill-opacity="0.35" stroke="#4a9eed" stroke-opacity="0.75" stroke-width="1"/>
+<text x="34.0" y="126.0" font-size="18" fill="#4a9eed" text-anchor="start"><tspan x="34.0" dy="0.0">TELÉFONO · app Expo / React Native</tspan></text>
+<text x="34.0" y="146.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="34.0" dy="0.0">en la calle · con sol · con una mano · sin señal</tspan></text>
+<rect x="40" y="158" width="460" height="90" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="270.0" y="176.6" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="270.0" dy="0.0">Pantalla «Caja a 14 días» ✓</tspan><tspan x="270.0" dy="20.8">veredicto · dependencia · certeza · 14 barras</tspan><tspan x="270.0" dy="20.8">3 acciones · hoja de abono · WhatsApp</tspan><tspan x="270.0" dy="20.8">toques ≥ 48 dp · contraste ≥ 7:1</tspan></text>
+<rect x="40" y="272" width="460" height="60" rx="10" fill="#d0bfff" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="270.0" y="296.4" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="270.0" dy="0.0">Estado local ✓ (reducer)</tspan><tspan x="270.0" dy="20.8">confirmado + outbox ⇒ proyección optimista</tspan></text>
+<rect x="40" y="356" width="460" height="70" rx="10" fill="#d0bfff" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="270.0" y="375.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="270.0" dy="0.0">Motor compartido @necta/cashflow-engine ✓</tspan><tspan x="270.0" dy="20.8">TypeScript puro · sin IO · ~0,3 ms por pronóstico</tspan><tspan x="270.0" dy="20.8">reglas versionadas · rulesVersion 2026.05.r2</tspan></text>
+<rect x="40" y="450" width="460" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="270.0" y="469.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="270.0" dy="0.0">SQLite local gestionada por PowerSync</tspan><tspan x="270.0" dy="20.8">tablas de la tienda: pronóstico oficial, cuentas,</tspan><tspan x="270.0" dy="20.8">pagos, compromisos y saldos · consultas reactivas</tspan></text>
+<rect x="40" y="532" width="460" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="270.0" y="551.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="270.0" dy="0.0">Cola de escrituras PowerSync (ps_crud)</tspan><tspan x="270.0" dy="20.8">id UUID generado en el cliente · en orden</tspan><tspan x="270.0" dy="20.8">al menos una vez → el servidor hace upsert</tspan></text>
+<rect x="40" y="626" width="460" height="70" rx="10" fill="#ffd8a8" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="270.0" y="645.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="270.0" dy="0.0">uploadData → API ✓ (prototipo: simulado, 0,9 s)</tspan><tspan x="270.0" dy="20.8">201 / 200 confirma · 409 → complete() + revisión</tspan><tspan x="270.0" dy="20.8">cola nunca bloqueada · nada se fusiona en silencio</tspan></text>
+<rect x="40" y="708" width="460" height="36" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="270.0" y="730.2" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="270.0" dy="0.0">wa.me con borrador ✓ · deep links necta:// · recibe push</tspan></text>
+<path d="M 132.0,248.0 L 132.0,272.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<text x="151.2" y="265.2" font-size="14" fill="#15803d" text-anchor="start"><tspan x="151.2" dy="0.0">registra</tspan></text>
+<path d="M 132.0,332.0 L 132.0,356.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<text x="153.3" y="349.2" font-size="14" fill="#15803d" text-anchor="start"><tspan x="153.3" dy="0.0">recalcula</tspan></text>
+<path d="M 408.0,450.0 L 408.0,426.0" fill="none" stroke="#5c5c5c" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="153.2" y="443.2" font-size="14" fill="#5c5c5c" text-anchor="start"><tspan x="153.2" dy="0.0">entrada del motor + cambios locales</tspan></text>
+<path d="M 132.0,602.0 L 132.0,626.0" fill="none" stroke="#5c5c5c" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="166.5" y="619.2" font-size="14" fill="#5c5c5c" text-anchor="start"><tspan x="166.5" dy="0.0">al volver la señal (PowerSync)</tspan></text>
+<rect x="540" y="100" width="340" height="284" rx="10" fill="#e5dbff" fill-opacity="0.35" stroke="#8b5cf6" stroke-opacity="0.75" stroke-width="1"/>
+<text x="554.0" y="126.0" font-size="18" fill="#8b5cf6" text-anchor="start"><tspan x="554.0" dy="0.0">WEB · React / Vite</tspan></text>
+<text x="554.0" y="146.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="554.0" dy="0.0">con calma · domingo por la noche</tspan></text>
+<rect x="556" y="158" width="308" height="70" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="710.0" y="177.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="710.0" dy="0.0">Panel «Caja a 14 días»</tspan><tspan x="710.0" dy="20.8">3 bandas día a día · muro</tspan><tspan x="710.0" dy="20.8">dependencias · cuadre</tspan></text>
+<rect x="556" y="240" width="308" height="60" rx="10" fill="#d0bfff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="710.0" y="264.4" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="710.0" dy="0.0">Simulador «¿qué pasa si…?»</tspan><tspan x="710.0" dy="20.8">el mismo motor, en el navegador</tspan></text>
+<rect x="556" y="312" width="308" height="56" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="710.0" y="335.1" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="710.0" dy="0.0">Sin datos locales · lee el GET</tspan><tspan x="710.0" dy="18.2">escribe a la API · sesión por cookie</tspan></text>
+<rect x="540" y="404" width="340" height="308" rx="10" fill="#ffd8a8" fill-opacity="0.35" stroke="#f59e0b" stroke-opacity="0.75" stroke-width="1"/>
+<text x="554.0" y="430.0" font-size="18" fill="#f59e0b" text-anchor="start"><tspan x="554.0" dy="0.0">INTEGRACIONES EXTERNAS</tspan></text>
+<text x="554.0" y="450.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="554.0" dy="0.0">servicios de Necta y terceros</tspan></text>
+<rect x="556" y="462" width="308" height="70" rx="10" fill="#ffd8a8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="710.0" y="481.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="710.0" dy="0.0">Expo Push</tspan><tspan x="710.0" dy="20.8">ticket → recibo a 15 min</tspan><tspan x="710.0" dy="20.8">DeviceNotRegistered → baja token</tspan></text>
+<rect x="556" y="544" width="308" height="70" rx="10" fill="#ffd8a8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="710.0" y="563.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="710.0" dy="0.0">Mensajería Necta</tspan><tspan x="710.0" dy="20.8">WhatsApp con plantilla aprobada</tspan><tspan x="710.0" dy="20.8">(caja_alerta_v1) · correo</tspan></text>
+<rect x="556" y="626" width="308" height="70" rx="10" fill="#ffd8a8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="710.0" y="645.0" font-size="16" fill="#1e1e1e" text-anchor="middle"><tspan x="710.0" dy="0.0">Voz · /v1/voice/extract-schema</tspan><tspan x="710.0" dy="20.8">cashCommitmentV1 · créditos</tspan><tspan x="710.0" dy="20.8">se confirma antes de entrar</tspan></text>
+<rect x="900" y="100" width="640" height="618" rx="10" fill="#d3f9d8" fill-opacity="0.35" stroke="#22c55e" stroke-opacity="0.75" stroke-width="1"/>
+<text x="914.0" y="126.0" font-size="18" fill="#22c55e" text-anchor="start"><tspan x="914.0" dy="0.0">SERVIDOR · Node.js + MongoDB + PowerSync</tspan></text>
+<text x="914.0" y="146.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="914.0" dy="0.0">fuente de verdad · misma lógica que el teléfono</tspan></text>
+<rect x="916" y="158" width="300" height="50" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1066.0" y="178.1" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1066.0" dy="0.0">API · token (app) / cookie (web)</tspan><tspan x="1066.0" dy="18.2">x-client-platform · límite por tienda</tspan></text>
+<rect x="916" y="220" width="300" height="70" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1066.0" y="241.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1066.0" dy="0.0">GET /v1/cashflow/forecast?days=14</tspan><tspan x="1066.0" dy="18.2">(desde snapshot)</tspan><tspan x="1066.0" dy="18.2">POST /v1/cashflow/forecast (directo)</tspan></text>
+<rect x="916" y="302" width="300" height="90" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1066.0" y="323.9" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1066.0" dy="0.0">POST /v2/receivables/:id/payments</tspan><tspan x="1066.0" dy="18.2">+ clientMutationId (compatible)</tspan><tspan x="1066.0" dy="18.2">201 · 200 replayed</tspan><tspan x="1066.0" dy="18.2">409 conflict · 409 exceeds_pending</tspan></text>
+<rect x="916" y="404" width="300" height="70" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1066.0" y="425.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1066.0" dy="0.0">POST /v2/banks/:id/reconcile-quick</tspan><tspan x="1066.0" dy="18.2">3 modos · ajuste conteo-de-caja</tspan><tspan x="1066.0" dy="18.2">idempotente</tspan></text>
+<rect x="916" y="486" width="300" height="70" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1066.0" y="507.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1066.0" dy="0.0">/v1/cashflow/commitments</tspan><tspan x="1066.0" dy="18.2">POST · PATCH confirm · DELETE</tspan><tspan x="1066.0" dy="18.2">detector de recurrencias</tspan></text>
+<rect x="916" y="568" width="300" height="70" rx="10" fill="#d0bfff" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="1066.0" y="589.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1066.0" dy="0.0">Motor determinista ✓ (mismo paquete)</tspan><tspan x="1066.0" dy="18.2">respuesta oficial · ForecastIssued</tspan><tspan x="1066.0" dy="18.2">5.000 tiendas ≈ minutos por noche</tspan></text>
+<rect x="1232" y="158" width="292" height="90" rx="10" fill="#ffd8a8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1378.0" y="179.9" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1378.0" dy="0.0">Orquestador de avisos</tspan><tspan x="1378.0" dy="18.2">cambio material · jueves 18:00</tspan><tspan x="1378.0" dy="18.2">dedupe · 7:00–20:00 · máx. 1 al día</tspan><tspan x="1378.0" dy="18.2">push → WhatsApp → correo</tspan></text>
+<rect x="1232" y="260" width="292" height="110" rx="10" fill="#d0bfff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1378.0" y="282.8" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1378.0" dy="0.0">Jobs BullMQ / Redis</tspan><tspan x="1378.0" dy="18.2">nocturno por zona horaria:</tspan><tspan x="1378.0" dy="18.2">perfiles 6 m · ritmo · snapshot</tspan><tspan x="1378.0" dy="18.2">eventos → isDirty → recálculo</tspan><tspan x="1378.0" dy="18.2">backtesting 7 y 14 días → MAE</tspan></text>
+<rect x="1232" y="382" width="292" height="110" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1378.0" y="404.8" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1378.0" dy="0.0">Idempotencia y conflictos</tspan><tspan x="1378.0" dy="18.2">upsert por el id del cliente</tspan><tspan x="1378.0" dy="18.2">= clientMutationId · recibo con hash</tspan><tspan x="1378.0" dy="18.2">pendiente validado de forma atómica</tspan><tspan x="1378.0" dy="18.2">nada se fusiona en silencio</tspan></text>
+<rect x="1232" y="504" width="292" height="90" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1378.0" y="525.9" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1378.0" dy="0.0">Señal de otras tiendas</tspan><tspan x="1378.0" dy="18.2">entidad: NIT &gt; teléfono &gt; nombre</tspan><tspan x="1378.0" dy="18.2">K ≥ 3 comercios · redondeo</tspan><tspan x="1378.0" dy="18.2">texto neutro · sin nombres ni montos</tspan></text>
+<rect x="1232" y="606" width="292" height="96" rx="10" fill="#d0bfff" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1378.0" y="621.8" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1378.0" dy="0.0">PowerSync Service · cloud o propio</tspan><tspan x="1378.0" dy="18.2">lee change streams de MongoDB</tspan><tspan x="1378.0" dy="18.2">sync rules: un bucket por tienda</tspan><tspan x="1378.0" dy="18.2">JWT de Necta · replica solo a la app</tspan><tspan x="1378.0" dy="18.2">escribe la API, no PowerSync</tspan></text>
+<rect x="900" y="826" width="640" height="226" rx="10" fill="#c3fae8" fill-opacity="0.35" stroke="#06b6d4" stroke-opacity="0.75" stroke-width="1"/>
+<text x="914.0" y="852.0" font-size="18" fill="#06b6d4" text-anchor="start"><tspan x="914.0" dy="0.0">DATOS · MongoDB Atlas (replica set, post-images)</tspan></text>
+<text x="914.0" y="872.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="914.0" dy="0.0">existentes (gris) y nuevas (punteadas) · PowerSync las replica por tienda</tspan></text>
+<rect x="912" y="884" width="200" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#6b6b6b" stroke-opacity="1" stroke-width="3"/>
+<text x="1012.0" y="905.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1012.0" dy="0.0">Existentes</tspan><tspan x="1012.0" dy="18.2">ventas · receivables</tspan><tspan x="1012.0" dy="18.2">payables · bancos</tspan></text>
+<rect x="1120" y="884" width="200" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1220.0" y="905.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1220.0" dy="0.0">CashflowForecastSnapshot</tspan><tspan x="1220.0" dy="18.2">isDirty · version</tspan><tspan x="1220.0" dy="18.2">~30 KB · {storeId} único</tspan></text>
+<rect x="1328" y="884" width="200" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1428.0" y="905.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1428.0" dy="0.0">MutationReceipt</tspan><tspan x="1428.0" dy="18.2">storeId+clientMutationId</tspan><tspan x="1428.0" dy="18.2">único · hash · TTL 90 d</tspan></text>
+<rect x="912" y="966" width="200" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1012.0" y="987.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1012.0" dy="0.0">CashCommitment</tspan><tspan x="1012.0" dy="18.2">fuente · confirmado</tspan><tspan x="1012.0" dy="18.2">recurrencia · bankId</tspan></text>
+<rect x="1120" y="966" width="200" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1220.0" y="987.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1220.0" dy="0.0">CounterpartyProfile 6 m</tspan><tspan x="1220.0" dy="18.2">NetworkProfile K ≥ 3</tspan><tspan x="1220.0" dy="18.2">EntityLink</tspan></text>
+<rect x="1328" y="966" width="200" height="70" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1428.0" y="987.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1428.0" dy="0.0">ForecastIssued</tspan><tspan x="1428.0" dy="18.2">cierres · hinges</tspan><tspan x="1428.0" dy="18.2">rulesVersion · backtest</tspan></text>
+<rect x="20" y="826" width="860" height="218" rx="10" fill="#fff3bf" fill-opacity="0.35" stroke="#f59e0b" stroke-opacity="0.75" stroke-width="1"/>
+<text x="34.0" y="852.0" font-size="18" fill="#f59e0b" text-anchor="start"><tspan x="34.0" dy="0.0">FLUJO · un abono registrado sin señal</tspan></text>
+<text x="34.0" y="872.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="34.0" dy="0.0">el prototipo lo hace con una cola simulada; en producción la cola y las tablas son de PowerSync</tspan></text>
+<rect x="36" y="884" width="203" height="66" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="137.5" y="903.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="137.5" dy="0.0">1 · Anota un abono</tspan><tspan x="137.5" dy="18.2">de un cliente</tspan><tspan x="137.5" dy="18.2">(hoja de abono)</tspan></text>
+<rect x="247" y="884" width="203" height="66" rx="10" fill="#d0bfff" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="348.5" y="903.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="348.5" dy="0.0">2 · Validación local</tspan><tspan x="348.5" dy="18.2">= regla del servidor</tspan><tspan x="348.5" dy="18.2">(monto ≤ pendiente)</tspan></text>
+<rect x="458" y="884" width="203" height="66" rx="10" fill="#c3fae8" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="559.5" y="903.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="559.5" dy="0.0">3 · Cola PowerSync</tspan><tspan x="559.5" dy="18.2">con id del cliente +</tspan><tspan x="559.5" dy="18.2">proyección optimista</tspan></text>
+<rect x="669" y="884" width="203" height="66" rx="10" fill="#a5d8ff" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="770.5" y="903.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="770.5" dy="0.0">4 · Pantalla recalculada</tspan><tspan x="770.5" dy="18.2">al instante · «Pendiente</tspan><tspan x="770.5" dy="18.2">de sincronizar»</tspan></text>
+<rect x="36" y="962" width="203" height="66" rx="10" fill="#ffd8a8" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="137.5" y="981.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="137.5" dy="0.0">5 · Vuelve la señal →</tspan><tspan x="137.5" dy="18.2">uploadData → POST</tspan><tspan x="137.5" dy="18.2">(upsert por id)</tspan></text>
+<rect x="247" y="962" width="203" height="66" rx="10" fill="#b2f2bb" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="348.5" y="981.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="348.5" dy="0.0">6 · 201 / 200 replayed</tspan><tspan x="348.5" dy="18.2">→ complete()</tspan><tspan x="348.5" dy="18.2">«Abono guardado»</tspan></text>
+<rect x="458" y="962" width="203" height="66" rx="10" fill="#ffc9c9" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="559.5" y="981.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="559.5" dy="0.0">7 · 409 → complete() +</tspan><tspan x="559.5" dy="18.2">revisión local (1 toque)</tspan><tspan x="559.5" dy="18.2">«mismo pago» / «aparte»</tspan></text>
+<rect x="669" y="962" width="203" height="66" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#15803d" stroke-opacity="1" stroke-width="3"/>
+<text x="770.5" y="981.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="770.5" dy="0.0">Cuadre en un toque:</tspan><tspan x="770.5" dy="18.2">descuadre confirmado</tspan><tspan x="770.5" dy="18.2">y la certeza sube</tspan></text>
+<path d="M 239.0,917.0 L 247.0,917.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<path d="M 450.0,917.0 L 458.0,917.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<path d="M 661.0,917.0 L 669.0,917.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<path d="M 770.5,950.0 L 770.5,956.0 L 137.5,956.0 L 137.5,962.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<path d="M 239.0,995.0 L 247.0,995.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<path d="M 450.0,995.0 L 458.0,995.0" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="20" y="1072" width="1520" height="356" rx="10" fill="#ffc9c9" fill-opacity="0.35" stroke="#ef4444" stroke-opacity="0.75" stroke-width="1"/>
+<text x="34.0" y="1098.0" font-size="18" fill="#ef4444" text-anchor="start"><tspan x="34.0" dy="0.0">FALLAS Y RESPUESTA</tspan></text>
+<text x="34.0" y="1118.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="34.0" dy="0.0">qué pasa cuando algo falla y qué hace el sistema</tspan></text>
+<rect x="36" y="1130" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="216.0" y="1159.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="216.0" dy="0.0">Sin señal</tspan><tspan x="216.0" dy="18.2">lee el snapshot con su hora · usa la outbox</tspan><tspan x="216.0" dy="18.2">el motor local recalcula con la misma regla</tspan></text>
+<rect x="412" y="1130" width="360" height="86" rx="10" fill="#ffc9c9" fill-opacity="1.0" stroke="#ef4444" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="592.0" y="1159.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="592.0" dy="0.0">La cola reenvía (app cerrada sin complete())</tspan><tspan x="592.0" dy="18.2">mismo id → upsert → 200 replayed</tspan><tspan x="592.0" dy="18.2">con el mismo paymentId, sin duplicar</tspan></text>
+<rect x="788" y="1130" width="360" height="86" rx="10" fill="#ffc9c9" fill-opacity="1.0" stroke="#ef4444" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="968.0" y="1159.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="968.0" dy="0.0">Mismo id, otro contenido</tspan><tspan x="968.0" dy="18.2">409 client_mutation_conflict</tspan><tspan x="968.0" dy="18.2">se conserva el abono original</tspan></text>
+<rect x="1164" y="1130" width="360" height="86" rx="10" fill="#ffc9c9" fill-opacity="1.0" stroke="#ef4444" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1344.0" y="1159.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1344.0" dy="0.0">Abono mayor al pendiente (otro desde la web)</tspan><tspan x="1344.0" dy="18.2">409 → complete() para no bloquear la cola</tspan><tspan x="1344.0" dy="18.2">revisión local: «mismo pago» o «pago aparte»</tspan></text>
+<rect x="36" y="1228" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="216.0" y="1257.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="216.0" dy="0.0">Push no entregado</tspan><tspan x="216.0" dy="18.2">recibo a 15 min · DeviceNotRegistered</tspan><tspan x="216.0" dy="18.2">baja token → WhatsApp plantilla → correo</tspan></text>
+<rect x="412" y="1228" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="592.0" y="1257.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="592.0" dy="0.0">Snapshot sucio o job nocturno atrasado</tspan><tspan x="592.0" dy="18.2">el GET recalcula desde entradas compactas</tspan><tspan x="592.0" dy="18.2">computedAt visible · alerta de antigüedad</tspan></text>
+<rect x="788" y="1228" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="968.0" y="1257.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="968.0" dy="0.0">Redis / cola caída</tspan><tspan x="968.0" dy="18.2">se sirve el último snapshot</tspan><tspan x="968.0" dy="18.2">los avisos se reanudan con dedupe</tspan></text>
+<rect x="1164" y="1228" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1344.0" y="1257.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1344.0" dy="0.0">Voz sin créditos o sin señal</tspan><tspan x="1344.0" dy="18.2">botón deshabilitado · formulario manual</tspan><tspan x="1344.0" dy="18.2">siempre se confirma antes de entrar</tspan></text>
+<rect x="36" y="1326" width="360" height="86" rx="10" fill="#ffc9c9" fill-opacity="1.0" stroke="#ef4444" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="216.0" y="1355.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="216.0" dy="0.0">PowerSync Service caído</tspan><tspan x="216.0" dy="18.2">la app sigue con su SQLite y encola cambios</tspan><tspan x="216.0" dy="18.2">la API y la web no dependen de él</tspan></text>
+<rect x="412" y="1326" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="592.0" y="1355.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="592.0" dy="0.0">JWT vencido o stream de Mongo atrasado</tspan><tspan x="592.0" dy="18.2">fetchCredentials renueva el token</tspan><tspan x="592.0" dy="18.2">computedAt visible · alerta de retraso</tspan></text>
+<rect x="788" y="1326" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="968.0" y="1355.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="968.0" dy="0.0">Sync rules incompletas (faltan filas)</tspan><tspan x="968.0" dy="18.2">prueba de contrato por tienda en CI</tspan><tspan x="968.0" dy="18.2">el GET /forecast sigue respondiendo</tspan></text>
+<rect x="1164" y="1326" width="360" height="86" rx="10" fill="#fff3bf" fill-opacity="1.0" stroke="#5c5c5c" stroke-opacity="1" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1344.0" y="1355.0" font-size="14" fill="#1e1e1e" text-anchor="middle"><tspan x="1344.0" dy="0.0">Celular nuevo o reinstalación</tspan><tspan x="1344.0" dy="18.2">solo baja el bucket de su tienda (~200 KB)</tspan><tspan x="1344.0" dy="18.2">segundos; la pantalla aparece con hora</tspan></text>
+<path d="M 500.0,661.0 L 530.0,661.0 L 530.0,814.0 L 888.0,814.0 L 888.0,347.0 L 916.0,347.0" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+<text x="536.8" y="808.2" font-size="14" fill="#15803d" text-anchor="start"><tspan x="536.8" dy="0.0">subida: uploadData → HTTPS · POST idempotente</tspan></text>
+<path d="M 1232.0,654.0 L 1224.0,654.0 L 1224.0,792.0 L 526.0,792.0 L 526.0,485.0 L 500.0,485.0" fill="none" stroke="#4a9eed" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="544.5" y="785.2" font-size="14" fill="#4a9eed" text-anchor="start"><tspan x="544.5" dy="0.0">bajada: PowerSync → SQLite local por tienda</tspan></text>
+<path d="M 1368.0,884.0 L 1436.4,702.0" fill="none" stroke="#4a9eed" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="1422.1" y="769.2" font-size="14" fill="#4a9eed" text-anchor="start"><tspan x="1422.1" dy="0.0">change streams</tspan></text>
+<path d="M 864.0,193.0 L 916.0,183.0" fill="none" stroke="#5c5c5c" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="870.8" y="172.2" font-size="14" fill="#5c5c5c" text-anchor="start"><tspan x="870.8" dy="0.0">HTTPS</tspan></text>
+<path d="M 916.0,255.0 L 864.0,270.0" fill="none" stroke="#4a9eed" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="843.8" y="291.2" font-size="14" fill="#4a9eed" text-anchor="start"><tspan x="843.8" dy="0.0">GET forecast</tspan></text>
+<path d="M 1066.0,638.0 L 1160.0,884.0" fill="none" stroke="#5c5c5c" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="890.6" y="785.2" font-size="14" fill="#5c5c5c" text-anchor="start"><tspan x="890.6" dy="0.0">lee entradas · escribe snapshot</tspan></text>
+<path d="M 1524.0,437.0 L 1536.0,437.0 L 1536.0,919.0 L 1528.0,919.0" fill="none" stroke="#5c5c5c" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="1516.9" y="502.2" font-size="14" fill="#5c5c5c" text-anchor="start"><tspan x="1516.9" dy="0.0">recibo</tspan></text>
+<path d="M 1378.0,158.0 L 1378.0,90.0 L 896.0,90.0 L 896.0,497.0 L 864.0,497.0" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="961.5" y="86.2" font-size="14" fill="#f59e0b" text-anchor="start"><tspan x="961.5" dy="0.0">aviso push</tspan></text>
+<path d="M 1232.0,203.0 L 1224.0,203.0 L 1224.0,593.0 L 896.0,593.0 L 864.0,593.0" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<path d="M 556.0,497.0 L 530.0,497.0 L 530.0,718.8 L 500.0,718.8" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<path d="M 556.0,579.0 L 534.0,579.0 L 534.0,733.2 L 500.0,733.2" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<path d="M 864.0,661.0 L 892.0,661.0 L 892.0,521.0 L 916.0,521.0" fill="none" stroke="#5c5c5c" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="7 5"/>
+<text x="20.0" y="1454.0" font-size="14" fill="#6b6b6b" text-anchor="start"><tspan x="20.0" dy="0.0">Prototipo: pantalla React Native + motor + estado optimista con cola simulada. En producción la persistencia y la sincronización son de PowerSync; el resto se construye según design.md y tasks.md (12 épicas, 5 fases).</tspan></text>
+</svg>
