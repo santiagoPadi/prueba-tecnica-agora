@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Node / Expo (app/)
+node_modules/
+.expo/
+dist/
+web-build/
+*.tsbuildinfo
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.metro-health-check*
+
+# Secretos y material nativo
+.env*
+*.pem
+*.p8
+*.p12
+*.key
+*.jks
+*.keystore
+*.mobileprovision
+
+# Claude Code: configuración local
+.claude/settings.local.json

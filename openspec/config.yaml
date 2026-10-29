@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  Idioma: español. Todos los artefactos se escriben en español.
+  Se conservan en inglés los encabezados estructurales de OpenSpec (Why, What Changes,
+  Capabilities, Impact, Purpose, ADDED Requirements, Requirement, Scenario, Context,
+  Goals / Non-Goals, Decisions, Risks / Trade-offs, Migration Plan, Open Questions,
+  Workflow follow-up) y las palabras clave SHALL / MUST / WHEN / THEN / AND.
+  Producto: Necta. App React Native + Expo (sesión por token), web React + Vite (sesión
+  por cookies), backend Node.js + MongoDB; cada cliente envía x-client-platform.
+  Caso de referencia: Carmen Ortiz, Limpia Ya, Barranquilla, lunes 25 de mayo de 2026
+  (enunciado «Pruebas técnicas» de Agora/Necta, no incluido en el repo). Sus datos están
+  en design.md (§6.14) y en app/src/engine/fixtures/carmen.ts; los escenarios con nombres
+  y cifras los usan como ejemplo verificable.
+  Contratos existentes que se respetan tal cual: storedLedgerBalance, projectedBalance,
+  alignmentDelta, counterpartyName, pendingAmount, creditDueBy, clientMutationId.
+  Ningún texto para la dueña usa jerga contable, financiera ni estadística.
+
+rules:
+  proposal:
+    - "Why en una o dos frases; el contexto largo va en «Estado de partida»."
+    - "Declarar Modified Capabilities solo si existe el spec base en openspec/specs/."
+  specs:
+    - "Un comportamiento por requisito y descripción de 500 caracteres o menos."
+    - "Escenarios con WHEN / THEN (y AND); nombres y cifras de ejemplo salen del caso de referencia."
+    - "Sin nombres de librerías, colecciones, tablas, índices ni endpoints internos; eso vive en design.md."
+  design:
+    - "Cada decisión con la alternativa descartada y por qué."
+    - "Las preguntas abiertas no pueden cambiar los specs, el enfoque ni las tareas."
+  tasks:
+    - "Grupos «## N. Nombre» e ids N.N; cada tarea con dependencias, talla, rol y cómo verificarla."
+
+operations:
+  archive:
+    guidance:
+      - "Archivar solo cuando el despliegue al 100 % lleve una semana de observación sin abonos duplicados."
