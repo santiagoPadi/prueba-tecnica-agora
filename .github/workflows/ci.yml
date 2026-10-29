@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  OPENSPEC_TELEMETRY: "0"
+  DO_NOT_TRACK: "1"
+  OPENSPEC_NO_UPDATE_CHECK: "1"
+
+jobs:
+  openspec:
+    name: openspec validate --all --strict
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validar el cambio y los specs en modo estricto
+        run: npx -y @fission-ai/openspec@1.14.2 validate --all --strict --no-interactive
+      - name: Estado del cambio
+        run: npx -y @fission-ai/openspec@1.14.2 status --change caja-a-14-dias
+
+  app:
+    name: app typecheck + tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
